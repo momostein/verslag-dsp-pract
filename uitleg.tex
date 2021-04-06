@@ -1,0 +1,209 @@
+%
+% ============Instellingen:============
+%
+%\documentclass[12pt]{article}
+\documentclass[12pt,a4paper]{article}
+\special{papersize=210mm,297mm}
+% Bovenstaande bevelen zorgen ervoor dat een bladzijde een echte A4 is,2 cm langer
+\usepackage[top=2.5cm, bottom=3cm, left=2.5cm, right=2.5cm]{geometry}
+% Bovenstaand toegevoegd bevel reduceert de marges rondom een blad.
+% zie: https://en.wikibooks.org/wiki/LaTeX/Page_Layout#Page_size_issues
+%\usepackage[english]{babel}
+\usepackage[dutch]{babel}
+% zie ook: https://nl.wikipedia.org/wiki/LaTeX
+% Het pakket babel zorgt ervoor dat al de benamingen in het Nederlands zijn
+\selectlanguage{dutch}
+% Zorgt ervoor dat het Nederlands ook echt wordt gebruikt...
+% Zie: https://groups.google.com/forum/#!topic/nl.comp.os.linux/l1M_VF8f8tc
+\usepackage[utf8x]{inputenc}
+% Zie http://www.faqoverflow.com/tex/13067.html: utf8x gebruikt ucs package en daar zit geen onderhoud meer op. Best utf8 gebruiken. Het gaat over het gebruik van speciale tekens... .
+%\usepackage{amsmath}
+% Zie: http://tex.stackexchange.com/questions/32100/what-does-each-ams-package-do
+\usepackage{amsmath, amsthm, amssymb, amsfonts} 
+\usepackage{graphicx}
+% om figuren te kunnen opnemen in de tekst.
+% Zie: https://en.wikibooks.org/wiki/LaTeX/Importing_Graphics
+\usepackage[colorinlistoftodos]{todonotes}
+%\colorbox{yellow}{TO DO / ex. reference}
+% Deze kan zeker worden overgeslagen: noteren van todo's.
+%http://tex.stackexchange.com/questions/9796/how-to-add-todo-notes
+\usepackage{float}
+% Floats dienen om vb. figuren en tabellen niet te splitsen over meerdere bladzijden.
+% Zie: https://en.wikibooks.org/wiki/LaTeX/Floats,_Figures_and_Captions
+\usepackage{caption}
+%captions dienen voor bijschriften.
+% Zie: https://en.wikibooks.org/wiki/LaTeX/Floats,_Figures_and_Captions
+\usepackage{subcaption}
+% Zie http://tex.stackexchange.com/questions/40460/how-to-put-subcaptions-below-subtables-and-increase-gap-between-subtables-with
+% zie ook: https://nl.sharelatex.com/blog/2013/08/07/thesis-series-pt3.html
+\usepackage{wrapfig}
+% laat toe tekst rond de figuur te plaatsen.
+% zie: https://nl.wikibooks.org/wiki/LaTeX/Figuren_en_drijvende_omgevingen
+%...
+%die 49 jaar werd.
+%\begin{wrapfigure}{r}{0.5\textwidth}
+%  \includegraphics[width=0.45\textwidth]{Gull}
+%  \caption{Foto van een meeuw} 
+%\end{wrapfigure}
+%Meeuwen broeden in grote, drukke en lawaaierige kolonies
+%...
+\usepackage{framed}
+% Een box is tekst die samenhoort op vb. 1 bladzijde.
+% Zie https://en.wikibooks.org/wiki/LaTeX/Boxes
+% met bijvoorbeeld
+%\begin{framed}
+%This is an easy way to box text within a document!
+%\end{framed}
+% kan je tekst zelf als 1 geheel definiëren.
+\usepackage{stfloats}
+% Dit is een interessante:
+% Zie https://www.ctan.org/pkg/stfloats
+% plaats van caption, baselineskip, ... 
+\usepackage{pdflscape}
+% Maakt dat je landscape kan werken.
+% Zie: https://www.ctan.org/pkg/pdflscape
+\usepackage{csquotes}
+% Deze gaat over het automatisch vervangen van quotes zodat je 1 quote ziet in je tekst.
+% Zie: https://www.ctan.org/pkg/csquotes
+%
+% Meerdere kolommen:
+% Zie ook: https://nl.sharelatex.com/learn/Multiple_columns
+\usepackage{multicol}
+\usepackage{color}
+% Laat toe om met kleur te werken, vb tekst in een kleur, tekst markeren in een kleur, etc.
+% Zie: https://en.wikibooks.org/wiki/LaTeX/Colors
+% \colorbox{declared-color}{TO DO / ...}
+% \textcolor{declared-color}{text}
+% Tabellen naast elkaar: subtables:
+% Zie : http://tex.stackexchange.com/questions/36077/argument-in-beginsubtable
+% Figuren naast elkaar: subfigures:
+% Zie: https://nl.sharelatex.com/learn/Positioning_images_and_tables
+%\usepackage{fontspec}
+%\setmainfont{Calibri.ttf}
+% Op deze manier kan je een ander lettertype gebruiken.
+% Tekst in vet, schuin of onderlijnd:
+% https://nl.sharelatex.com/learn/Bold,_italics_and_underlining
+% Some of the \textbf{greatest} discoveries in \underline{science} were made by \textit{accident}.
+%\parskip = \baselineskip
+% Bevel verplaatst na table of content.
+% Vorig bevel: voeg een extra blanco lijn toe na elke paragraaf
+% Zie: http://tex.stackexchange.com/questions/74170/have-new-line-between-paragraphs-no-indentation
+\setlength{\parindent}{0em}
+% Geen identatie
+% Zie: https://nl.sharelatex.com/learn/Paragraph_formatting#Paragraph_Indentation
+% Opsommingen:
+% Zie: https://en.wikibooks.org/wiki/LaTeX/List_Structures
+% Zie: https://nl.sharelatex.com/learn/Lists
+%Soorten lijsten:
+%- itemize for a bullet list
+%- enumerate for an enumerated list and
+%- description for a descriptive list.
+%
+%\usepackage{enumitem}
+%
+%Voorbeelden:
+%\begin{itemize}  
+%\item The first item 
+%\item The second item 
+%\item The third item
+%\end{itemize}
+%of:
+%\begin{itemize}[noitemsep] %[noitemsep]: bolletjes dichter bij elkaar
+%\item The first item
+%\item The second item
+%\item The third item
+%\end{itemize}
+%en:
+%\begin{enumerate}
+%\item The first item
+%\begin{enumerate}
+%\item Nested item 1
+%\item Nested item 2
+%\end{enumerate}
+%\item The second item
+%\item The third etc \ldots
+%\end{enumerate}
+%en:
+%\usepackage[inline]{enumitem}
+%\usepackage{xcolor}
+%\begin{document}
+% Coco likes fruit. Her favorites are:
+%\begin{enumerate*}[label={\alph*)},font={\color{red!50!black}\bfseries}]
+%\item bananas
+%\item apples
+%\item oranges and
+%\item lemons.
+%\end{enumerate*}
+% Referenties leggen:
+%\label{referentiewoord}
+%\ref{referentiewoord}
+%\pageref{referentiewoord}
+% https://nl.wikibooks.org/wiki/LaTeX/Labels_en_Referenties
+\captionsetup[figure]{name=Figuur} 
+% Om Nederlandse figuurnamen te hebben
+\captionsetup[table]{name=Tabel}
+%\captionsetup{font=footnotesize} toegevoegd om de bijschriften ook in een kleiner lettertype te hebben.
+\captionsetup{font=footnotesize}
+% http://tex.stackexchange.com/questions/82993/how-to-change-the-name-of-document-elements-like-figure-contents-bibliogr
+\addto\captionsenglish{% Replace "english" with the language you use
+  \renewcommand{\contentsname}%
+    {Inhoudstafel}%
+}
+
+%Bruikbare lettertypes zijn:
+%\Huge
+%\huge
+%\LARGE
+%\Large
+%\large
+%\normalsize
+%\small
+%\footnotesize
+%\scriptsize :extra klein voor brede tabellen in landscape 
+%\tiny
+
+
+voor de referenties:
+
+%@article{greenwade93,
+%    author  = "George D. Greenwade",
+%    title   = "The {C}omprehensive {T}ex {A}rchive {N}etwork ({CTAN})",
+%    year    = "1993",
+%    journal = "TUGBoat",
+%    volume  = "14",
+%    number  = "3",
+%    pages   = "342--351"
+%},
+
+%@book{goossens93,
+%    author    = "Michel Goossens and Frank Mittelbach and Alexander Samarin",
+%    title     = "The LaTeX Companion",
+%    year      = "1993",
+%    publisher = "Addison-Wesley",
+%    address   = "Reading, Massachusetts"
+%},
+
+%@misc{website:fermentas-lambda,
+%      author = "Fermentas Inc.",
+%      title = "Phage Lambda: description \& restriction map",
+%      month = "November",
+%      year = "2008",
+%      url = "http://www.fermentas.com/techinfo/nucleicacids/maplambda.htm"
+%},
+
+%@online{WinNT,
+%  author = {MultiMedia LLC},
+%  title = {{MS Windows NT} Kernel Description},
+%  year = 1999,
+%  url = {http://web.archive.org/web/20080207010024/http://www.808multimedia.com/winnt/kernel.htm},
+%  urldate = {2010-09-30}
+%}
+
+%misc{website:DSNH,
+%      author = "Martin D.",
+%      title = "Deep Space Network history",
+%      month = "22 juli",
+%      year = "2005",
+%      note = "Toegang: 5 oktober 2013",
+%      url = "https://deepspace.jpl.nasa.gov/dsn/history/"
+%},

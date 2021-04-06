@@ -1,0 +1,96 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% University Assignment Title Page 
+% LaTeX Template
+% Version 1.0 (27/12/12)
+%
+% This template has been downloaded from:
+% http://www.LaTeXTemplates.com
+%
+% Original author:
+% WikiBooks (http://en.wikibooks.org/wiki/LaTeX/Title_Creation)
+%
+% License:
+% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+% 
+%
+% ============Instellingen:============
+%
+%\documentclass[12pt]{article}
+\documentclass[12pt,a4paper]{article}
+\special{papersize=210mm,297mm}
+\usepackage[top=2.5cm, bottom=3cm, left=2.5cm, right=2.5cm]{geometry}
+%\usepackage[english]{babel}
+\usepackage[dutch]{babel}
+\selectlanguage{dutch}
+\usepackage[utf8x]{inputenc}
+%\usepackage{amsmath}
+\usepackage{amsmath, amsthm, amssymb, amsfonts}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{wrapfig}
+\usepackage{framed}
+\usepackage{stfloats}
+\usepackage{pdflscape}
+% Maakt dat je landscape kan werken.
+% Zie: https://www.ctan.org/pkg/pdflscape
+\usepackage{csquotes}
+\usepackage{multicol}
+\usepackage[colorinlistoftodos]{todonotes}
+\usepackage{color}
+% \colorbox{declared-color}{TO DO / ...}
+% \textcolor{declared-color}{text}
+%\usepackage{fontspec}
+%\setmainfont{Calibri.ttf}
+
+%\parskip = \baselineskip
+% Bevel verplaatst na table of content.
+% Vorig bevel: voeg een extra blanco lijn toe na elke paragraaf
+
+\setlength{\parindent}{0em}
+\usepackage{enumitem}
+
+\captionsetup[figure]{name=Figuur} 
+% Om Nederlandse figuurnamen te hebben
+\captionsetup[table]{name=Tabel}
+%\captionsetup{font=footnotesize} toegevoegd om de bijschriften ook in een kleiner lettertype te hebben.
+\captionsetup{font=footnotesize}
+
+\addto\captionsenglish{% Replace "english" with the language you use
+  \renewcommand{\contentsname}%
+    {Inhoudstafel}%
+}
+
+%
+% ============ BEGIN VAN HET DOCUMENT ============
+%
+%
+\begin{document}
+
+%Titelpagina....
+\input{titelblad.tex}
+
+\small
+\tableofcontents
+\newpage
+\listoffigures
+\newpage
+\listoftables
+% Volgend bevel staat pas hier, want anders staat er een blanco lijn na elke lijn in de inhoudstafel en de lijsten van figuren en tabellen:
+\parskip = \baselineskip
+\newpage
+\input{afkortingen.tex}
+%\begin{multicols}{2}	
+%\input{tekst.tex}
+\input{voorbeeld.tex}
+%\end{multicols}
+
+\scriptsize
+\newpage
+\begin{flushleft}
+\bibliographystyle{IEEEtran}
+\bibliography{bronnen} %Je mag deze file een andere naam geven, maar de extensie moet 'bib' zijn. 
+\end{flushleft}
+
+\end{document}
