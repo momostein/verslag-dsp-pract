@@ -1,5 +1,5 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% University Assignment Title Page 
+% University Assignment Title Page
 % LaTeX Template
 % Version 1.0 (27/12/12)
 %
@@ -11,7 +11,7 @@
 %
 % License:
 % CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
-% 
+%
 %
 % ============Instellingen:============
 %
@@ -20,7 +20,7 @@
 \special{papersize=210mm,297mm}
 \usepackage[top=2.5cm, bottom=3cm, left=2.5cm, right=2.5cm]{geometry}
 %\usepackage[english]{babel}
-\usepackage[dutch]{babel}
+\usepackage[main=dutch,english]{babel}
 \selectlanguage{dutch}
 \usepackage[utf8x]{inputenc}
 %\usepackage{amsmath}
@@ -51,7 +51,7 @@
 \setlength{\parindent}{0em}
 \usepackage{enumitem}
 
-\captionsetup[figure]{name=Figuur} 
+\captionsetup[figure]{name=Figuur}
 % Om Nederlandse figuurnamen te hebben
 \captionsetup[table]{name=Tabel}
 %\captionsetup{font=footnotesize} toegevoegd om de bijschriften ook in een kleiner lettertype te hebben.
@@ -81,16 +81,16 @@
 \parskip = \baselineskip
 \newpage
 \input{afkortingen.tex}
-%\begin{multicols}{2}	
-%\input{tekst.tex}
-\input{voorbeeld.tex}
+%\begin{multicols}{2}
+\input{tekst.tex}
+% \input{voorbeeld.tex}
 %\end{multicols}
 
 \scriptsize
 \newpage
 \begin{flushleft}
 \bibliographystyle{IEEEtran}
-\bibliography{bronnen} %Je mag deze file een andere naam geven, maar de extensie moet 'bib' zijn. 
+\bibliography{bronnen} %Je mag deze file een andere naam geven, maar de extensie moet 'bib' zijn.
 \end{flushleft}
 
 \end{document}
