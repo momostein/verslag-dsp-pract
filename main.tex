@@ -24,6 +24,7 @@
 \selectlanguage{dutch}
 \usepackage[utf8x]{inputenc}
 %\usepackage{amsmath}
+\usepackage{url}
 \usepackage{amsmath, amsthm, amssymb, amsfonts}
 \usepackage{graphicx}
 \usepackage{float}
@@ -61,6 +62,9 @@
   \renewcommand{\contentsname}%
     {Inhoudstafel}%
 }
+
+% The latex-2-awa tool will ignore everything in this new dummy environment
+\newenvironment{no-awa}{}{}
 
 %
 % ============ BEGIN VAN HET DOCUMENT ============
