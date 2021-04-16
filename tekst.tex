@@ -17,23 +17,23 @@ Dat is mogelijk omdat de embedded devices steeds sneller en beter worden in het 
 Op die manier kunnen wij het machine learning model dichter bij de sensor plaatsen waardoor wij het benodigde netwerkverkeer minimaliseren.
 Ook de latency of vertraging tussen opname en actie is veel kleiner. \cite{flir-edge-computing}
 
-De ruwe data van de sensoren kan soms ook sensitieve informatie zoals gezichten of nummerplaten bevatten. Omdat we de data on-edge verwerken hoeven we die niet naar de cloud te sturen waar ze onderweg misschien onderschept kunnen worden. \cite{flir-edge-computing}
-Het is echter niet zo simpel om de machine learning code, die geoptimaliseerd is voor multi-core servers, zomaar over te zetten naar de kleine, vaak single-core, microprocessors van deze embedded devices.
-% In dit verslag leg ik het proces om een machine learning model getrained in python, over te zetten naar C code voor een microcontroller.
+De ruwe data van de sensoren kan soms ook sensitieve informatie zoals gezichten of nummerplaten bevatten. Omdat we de data on-edge verwerken hoeven we die niet naar de cloud te sturen waar men ze kan onderscheppen. \cite{flir-edge-computing}
+Het is echter niet zo simpel om de machine learning code, die geoptimaliseerd is voor multi-core servers, zomaar over te zetten naar de kleine, vaak single-core, microprocessors van die embedded devices.
+% In dit verslag leg ik het proces om een machine learning model getraind in python, over te zetten naar C code voor een microcontroller.
 
 \subsection{Doel van het project}
 
 Het doel van dit project is met een Convolutional Neural Netwerk (CNN) geluidsevents te classificeren.
 Die geluidsevents kunnen bijvoorbeeld spraak, een handenklap, gefluit of achtergrondgeluid zijn.
 Dat is relatief simpel uit te voeren op een normale PC, maar het is dus niet praktisch om alle geluidsdata van meerdere meetpunten centraal te verwerken in real time.
-Ook is het niet kost-effectief om overal aparte PC's te plaatsen. In dit project ga ik dus het getrained CNN op een microcontroller uitvoeren om geluid van de ingebouwde microfoon te classificeren.
+Ook is het niet kost-effectief om overal aparte PC's te plaatsen. In dit project gaan we dus het getraind CNN op een microcontroller uitvoeren om geluid van de ingebouwde microfoon te classificeren.
 
 \section{Log-Mel feature extraction}
 
 Het is mogelijk om een CNN te trainen op de onverwerkte geluidsdata.
 Er zijn echter veel grotere modellen voor nodig, tot 34 lagen diep, en zal daarom ook sneller vatbaar voor overfitting. \cite{IEEE:very-deep-cnn-raw-waveforms}
-Daarom is er toch een feature extraction stap gemaakt om de onverwerkte geluidsdata om te rekenen naar een Log-Mel spectrogram.
-Dit Log-Mel spectrogram is eigenlijk een gewoon spectrogram waarvan we de frequentiebanden een beetje vervormd hebben zodat ze beter overeenkomen met de menselijke perceptie van geluid. \cite{enwiki:mel-freq-cepstrum}
+Daarom is er toch een feature extraction stap gemaakt om de onverwerkte geluidsdata om te rekenen naar een Log-Mel-spectrogram.
+Dit Log-Mel-spectrogram is eigenlijk een gewoon spectrogram waarvan we de frequentiebanden een beetje vervormd hebben zodat ze beter overeenkomen met de menselijke perceptie van geluid. \cite{enwiki:Mel-freq-cepstrum}
 
 \begin{no-awa} % Zorgt ervoor dat de latex-2-awa parser deze environment negeert
 De  Log-Mel feature extraction gebeurt in deze 5 stappen:
@@ -49,8 +49,8 @@ De  Log-Mel feature extraction gebeurt in deze 5 stappen:
 
 	\item Framing and windowing
 	      \begin{itemize}
-		      \item Eerst deel ik de audio op in frames van 32 ms die elk 10 ms overlappen met elkaar
-		      \item Daarna pas ik een Hamming-venster toe om hoogfrequente ruis te vermeiden \cite{enwiki:windowing}
+		      \item Eerst delen de audio op in frames van 32 ms die elk 10 ms overlappen met elkaar
+		      \item Daarna passen we een Hamming-venster toe om hoogfrequente ruis te vermeiden \cite{enwiki:windowing}
 	      \end{itemize}
 
 	\item Discrete Fourier Transform (DFT)
@@ -62,16 +62,16 @@ De  Log-Mel feature extraction gebeurt in deze 5 stappen:
 
 	\item Mel-frequency warping
 	      \begin{itemize}
-		      \item Mel-frequency warping transformeert de originele hoogdimensionale frequentievector naar een mel-frequency vector. Zie Figuur~\ref{fig:mel-bands}.
+		      \item Mel-frequency warping transformeert de originele hoogdimensionale frequentievector naar een Mel-frequency vector. Zie Figuur~\ref{fig:Mel-bands}.
 		            \begin{itemize}[label={}]
-			            \item \(f_{mel} = 2595\log_{10}(1 + \frac{f}{700})\)
+			            \item \(f_{Mel} = 2595\log_{10}(1 + \frac{f}{700})\)
 		            \end{itemize}
-		      \item Die mel-frequency vector bevat minder frequentiebanden en is daardoor veel lager in dimensies. De mel-banden zijn echter zo verspreid zodat ze veel beter overeenkomen met de menselijke perceptie van geluid.
+		      \item Die Mel-frequency vector bevat minder frequentiebanden en is daardoor veel lager in dimensies. De Mel-banden zijn echter zo verspreid zodat ze veel beter overeenkomen met de menselijke perceptie van geluid.
 	      \end{itemize}
 
 	\item Feature normalisation and scaling
 	      \begin{itemize}
-		      \item Tenslotte normaliseren we de logaritmes van de mel-magnitudes zodat het gemiddelde nul is, en de standaardafwijking één is:
+		      \item Tenslotte normaliseren we de logaritmes van de Mel-magnitudes zodat het gemiddelde nul is, en de standaardafwijking één is:
 		            \begin{itemize}[label={}]
 			            \item \(m'_b = \frac{\ln\left( m_b \right) - \mu_b}{\sigma_b}\)
 		            \end{itemize}
@@ -83,19 +83,42 @@ De  Log-Mel feature extraction gebeurt in deze 5 stappen:
 
 \begin{figure}[ht]
 	\centering
-	\includegraphics[width=0.7\textwidth]{figuren/mel-frequency.png}
+	\includegraphics[width=0.6\textwidth]{figuren/Mel-frequency.png}
 	\caption{Mel-frequency warping}
 	\cite{efficient-feature-extraction}
-	\label{fig:mel-bands}
+	\label{fig:Mel-bands}
 \end{figure}
 
 
 \section{Convolutional Neural Network (CNN)}
 
-\subsection{Structuur van ons CNN-model}
+Om met de Log-Mel samples geluidsevents te kunnen herkennen, gebruik ik een Convolutional Neural Network (CNN). Ons model bestaat uit meerdere verschillende lagen. De belangrijkste lagen zijn de convolutielagen. De eerste convolutielaag past een 2D-convolutie toe op het Log-Mel-spectrum met een bepaald aantal filters. Die filters gaan we optimaliseren met machine learning.
+Na elke convolutielaag voegen we een ReLU activation laag toe. (niet weergegeven op afbeelding \ref{fig:cnn-model}) De ReLU activatiefunctie is snel en gemakkelijk te berekenen, \cite{enwiki:relu} maar kan soms lijden tot een 'vanishing gradient'. \cite{enwiki:vanishing-gradient}
 
-\subsection{Training}
+Om de dimensionaliteit van onze lagen kleiner te maken, introduceren wij een max pooling laag na elke activatielaag. Die laag neemt het maximum van een aantal waardes en laat de rest vallen. Daarna plaatsen wij een dropout laag. (niet weergegeven op afbeelding \ref{fig:cnn-model}) Die gaat willekeurig, met een kans van 50 \%, de resultaten van verschillende convolutiefilters met nul vermenigvuldigen en dus laten vallen. Dit is om overfitting tijdens het trainen tegen te gaan.
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=0.9\textwidth]{figuren/cnn.png}
+	\caption{Voorbeeld van een CNN model}w
+	\cite{slides:cnn}
+	\label{fig:cnn-model}
+\end{figure}
+
+Die vier lagen (convolutie, activatie, max pooling en dropout) herhalen we drie keer. Daarna schakelen we over naar een traditioneel neuraal netwerk, ookwel 'fully connected netwerk' genoemd. Die bestaat uit fully connected layers of perceptronlagen, activatielagen en dropout lagen. Als allerlaatste outputlaag gebruiken wij een softmax activation layer om een genormaliseerde kansverdeling over de verschillende geluidsklassen. \cite{enwiki:softmax}
+
+% TODO: Maybe add a table with the specific structure of the model and the amount of parameters
+
+\subsection{Trainen van het model}
+\subsubsection{Installatie Python en Tensorflow}
+Het trainen van het model hebben we gewoon gedaan op onze PC's in python. Hiervoor hebben wij de Keras uit de TensorFlow package gebruikt. Het installeren van alle benodigde packages ging echter niet vlekkeloos. Uit de TensorFlow documentatie konden we afleiden dat we specifiek Python 3.8 moesten installeren in plaats van de meest up-to-date versie van python. Dan bleek dat er nog meer packages nodig waren. Toch kon ik het relatief snel alle problemen oplossen.
+
+% TODO: Decide if I leave this paragraph in or not
+Voor Python gebruik ik Visual Studio Code, een all round text editor, om de code te schrijven en Powershell, een command line interface, om mijn Python omgeving manueel te managen. Ik vermoed dat ik, door deze ervaring met Python projecten handmatig op te starten, gemakkelijker alle installatieproblemen kon vinden en oplossen.
+Een requirements.txt file \cite{pip-user-guide} had bijvoorbeeld al een goede hulp geweest voor het installeren van de juiste packages.
+
 \subsubsection{Resultaten}
+
 
 
 \section{Edge implementatie}

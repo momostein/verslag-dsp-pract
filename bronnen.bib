@@ -1,38 +1,31 @@
-@misc{flir-edge-computing,
-  title   = {{Edge Computing | FLIR Systems}},
-  url     = {https://www.flir.com/discover/iis/machine-vision/edge-computing/},
-  urldate = {2021-04-07}
+@misc{pip-user-guide,
+  title   = {{User Guide - pip documentation v21.0.1}},
+  url     = {https://pip.pypa.io/en/stable/user_guide/#requirements-files},
+  urldate = {2021-04-16}
 }
 
-@techreport{very-deep-cnn-raw-waveforms,
-  abstract        = {Learning acoustic models directly from the raw wave-form data with minimal processing is challenging. Current waveform-based models have generally used very few (∼2) convolutional layers, which might be insufficient for building high-level discriminative features. In this work, we propose very deep convolutional neural networks (CNNs) that directly use time-domain waveforms as inputs. Our CNNs, with up to 34 weight layers, are efficient to optimize over very long sequences (e.g., vector of size 32000), necessary for processing acoustic waveforms. This is achieved through batch normalization, residual learning, and a careful design of down-sampling in the initial layers. Our networks are fully convolutional, without the use of fully connected layers and dropout, to maximize representation learning. We use a large receptive field in the first convolutional layer to mimic bandpass filters, but very small receptive fields subsequently to control the model capacity. We demonstrate the performance gains with the deeper models. Our evaluation shows that the CNN with 18 weight layers outperform the CNN with 3 weight layers by over 15% in absolute accuracy for an environmental sound recognition task and matches the performance of models using log-mel features.},
-  archiveprefix   = {arXiv},
-  arxivid         = {1610.00087v1},
-  author          = {Dai, Wei and Dai, Chia and Qu, Shuhui and Li, Juncheng and Das, Samarjit},
-  eprint          = {1610.00087v1},
-  file            = {:C\:/Users/brech/AppData/Local/Mendeley Ltd./Mendeley Desktop/Downloaded/Dai et al. - Unknown - VERY DEEP CONVOLUTIONAL NEURAL NETWORKS FOR RAW WAVEFORMS.pdf:pdf},
-  keywords        = {Acoustic Modeling,Environ-mental Sound,Index Terms-Convolutional Neural Networks,Neural Networks,Raw Waveform},
-  mendeley-groups = {DSP: CNN on the edge},
-  title           = {{VERY DEEP CONVOLUTIONAL NEURAL NETWORKS FOR RAW WAVEFORMS}}
+@misc{enwiki:FFT,
+  author       = {{Wikipedia contributors}},
+  title        = {Fast Fourier transform --- {Wikipedia}{,} The Free Encyclopedia},
+  year         = {2021},
+  howpublished = {\url{https://en.wikipedia.org/w/index.php?title=Fast_Fourier_transform&oldid=1017562639}},
+  note         = {[Online; accessed 16-April-2021]}
 }
 
-@misc{enwiki:mel-freq-cepstrum,
+ @misc{enwiki:Mel-freq-cepstrum,
   author       = {{Wikipedia contributors}},
   title        = {Mel-frequency cepstrum --- {Wikipedia}{,} The Free Encyclopedia},
-  year         = {2020},
-  howpublished = {\url{https://en.wikipedia.org/w/index.php?title=Mel-frequency_cepstrum&oldid=988437240}},
-  note         = {[Online; accessed 11-April-2021]}
+  year         = {2021},
+  howpublished = {\url{https://en.wikipedia.org/w/index.php?title=Mel-frequency_cepstrum&oldid=1017741962}},
+  note         = {[Online; accessed 16-April-2021]}
 }
 
-@inproceedings{IEEE:very-deep-cnn-raw-waveforms,
-  author    = {W. {Dai} and C. {Dai} and S. {Qu} and J. {Li} and S. {Das}},
-  booktitle = {2017 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP)},
-  title     = {Very deep convolutional neural networks for raw waveforms},
-  year      = {2017},
-  volume    = {},
-  number    = {},
-  pages     = {421-425},
-  doi       = {10.1109/ICASSP.2017.7952190}
+@misc{enwiki:vanishing-gradient,
+  author       = {{Wikipedia contributors}},
+  title        = {Vanishing gradient problem --- {Wikipedia}{,} The Free Encyclopedia},
+  year         = {2021},
+  howpublished = {\url{https://en.wikipedia.org/w/index.php?title=Vanishing_gradient_problem&oldid=1006243644}},
+  note         = {[Online; accessed 16-April-2021]}
 }
 
 @misc{enwiki:windowing,
@@ -40,32 +33,62 @@
   title        = {Window function --- {Wikipedia}{,} The Free Encyclopedia},
   year         = {2021},
   howpublished = {\url{https://en.wikipedia.org/w/index.php?title=Window_function&oldid=1016852354}},
-  note         = {[Online; accessed 12-April-2021]}
+  note         = {[Online; accessed 16-April-2021]}
 }
 
-@misc{enwiki:FFT,
+@misc{enwiki:relu,
   author       = {{Wikipedia contributors}},
-  title        = {Fast Fourier transform --- {Wikipedia}{,} The Free Encyclopedia},
+  title        = {Rectifier (neural networks) --- {Wikipedia}{,} The Free Encyclopedia},
   year         = {2021},
-  howpublished = {\url{https://en.wikipedia.org/w/index.php?title=Fast_Fourier_transform&oldid=1017222494}},
-  note         = {[Online; accessed 12-April-2021]}
+  howpublished = {\url{https://en.wikipedia.org/w/index.php?title=Rectifier_(neural_networks)&oldid=1017665493}},
+  note         = {[Online; accessed 16-April-2021]}
+}
+
+@misc{enwiki:softmax,
+  author       = {{Wikipedia contributors}},
+  title        = {Softmax function --- {Wikipedia}{,} The Free Encyclopedia},
+  year         = {2021},
+  howpublished = {\url{https://en.wikipedia.org/w/index.php?title=Softmax_function&oldid=1012399737}},
+  note         = {[Online; accessed 16-April-2021]}
+}
+
+@inproceedings{IEEE:very-deep-cnn-raw-waveforms,
+  author    = {Dai, W and Dai, C and Qu, S and Li, J and Das, S},
+  booktitle = {2017 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP)},
+  doi       = {10.1109/ICASSP.2017.7952190},
+  file      = {:C\:/Users/brech/AppData/Local/Mendeley Ltd./Mendeley Desktop/Downloaded/Dai et al. - Unknown - VERY DEEP CONVOLUTIONAL NEURAL NETWORKS FOR RAW WAVEFORMS.pdf:pdf},
+  pages     = {421--425},
+  title     = {{Very deep convolutional neural networks for raw waveforms}},
+  year      = {2017}
+}
+
+@unpublished{slides:cnn,
+  author = {Karsmakers, Peter and Suraj, Khan and Vuegen, Lode},
+  title  = {{Digital Signal Processing Practicum}},
+  year   = {2021},
+  note   = {Niet gepubliceerd werk}
 }
 
 @article{efficient-feature-extraction,
-  abstract        = {Due to the presence of non-stationarities and discontinuities in the audio signal, segmentation and classification of audio signal is a really challenging task. Automatic music classification and anno-tation is still considered as a challenging task due to the difficulty of extracting and selecting the optimal audio features. Hence, this paper proposes an efficient approach for segmentation, feature extraction and classification of audio signals. Enhanced Mel Frequency Cepstral Coefficient (EMFCC)-Enhanced Power Normalized Cepstral Coefficients (EPNCC) based feature extraction is applied for the extraction of features from the audio signal. Then, multi-level classification is done to classify the audio signal as a musical or non-musical signal. The proposed approach achieves better per-formance in terms of precision, Normalized Mutual Information (NMI), F-score and entropy. The PNN classifier shows high False Rejection Rate (FRR), False Acceptance Rate (FAR), Genuine Ac-ceptance rate (GAR), sensitivity, specificity and accuracy with respect to the number of classes.},
-  author          = {Arumugam, Muthumari and Kaliappan, Mala},
-  doi             = {10.4236/cs.2016.74024},
-  file            = {:C\:/Users/brech/AppData/Local/Mendeley Ltd./Mendeley Desktop/Downloaded/Arumugam, Kaliappan - 2016 - An Efficient Approach for Segmentation, Feature Extraction and Classification of Audio Signals.pdf:pdf},
-  issn            = {2153-1285},
-  journal         = {Circuits and Systems},
-  keywords        = {Audio Signal,Enhanced Mel Frequency Cepstral Coefficient (EMFCC,Enhanced Power Normalized Cepstral Coefficients (E,Probabilistic Neural Network (PNN) Classifier},
-  mendeley-groups = {DSP: CNN on the edge},
-  month           = {apr},
-  number          = {04},
-  pages           = {255--279},
-  publisher       = {Scientific Research Publishing, Inc,},
-  title           = {{An Efficient Approach for Segmentation, Feature Extraction and Classification of Audio Signals}},
-  url             = {http://www.scirp.org/journal/cshttp://dx.doi.org/10.4236/cs.2016.74024http://dx.doi.org/10.4236/cs.2016.74024http://creativecommons.org/licenses/by/4.0/},
-  volume          = {07},
-  year            = {2016}
+  abstract  = {Due to the presence of non-stationarities and discontinuities in the audio signal, segmentation and classification of audio signal is a really challenging task. Automatic music classification and anno-tation is still considered as a challenging task due to the difficulty of extracting and selecting the optimal audio features. Hence, this paper proposes an efficient approach for segmentation, feature extraction and classification of audio signals. Enhanced Mel Frequency Cepstral Coefficient (EMFCC)-Enhanced Power Normalized Cepstral Coefficients (EPNCC) based feature extraction is applied for the extraction of features from the audio signal. Then, multi-level classification is done to classify the audio signal as a musical or non-musical signal. The proposed approach achieves better per-formance in terms of precision, Normalized Mutual Information (NMI), F-score and entropy. The PNN classifier shows high False Rejection Rate (FRR), False Acceptance Rate (FAR), Genuine Ac-ceptance rate (GAR), sensitivity, specificity and accuracy with respect to the number of classes.},
+  author    = {Arumugam, Muthumari and Kaliappan, Mala},
+  doi       = {10.4236/cs.2016.74024},
+  file      = {:C\:/Users/brech/AppData/Local/Mendeley Ltd./Mendeley Desktop/Downloaded/Arumugam, Kaliappan - 2016 - An Efficient Approach for Segmentation, Feature Extraction and Classification of Audio Signals.pdf:pdf},
+  issn      = {2153-1285},
+  journal   = {Circuits and Systems},
+  keywords  = {Audio Signal,Enhanced Mel Frequency Cepstral Coefficient (EMFCC,Enhanced Power Normalized Cepstral Coefficients (E,Probabilistic Neural Network (PNN) Classifier},
+  month     = {apr},
+  number    = {04},
+  pages     = {255--279},
+  publisher = {Scientific Research Publishing, Inc,},
+  title     = {{An Efficient Approach for Segmentation, Feature Extraction and Classification of Audio Signals}},
+  url       = {http://www.scirp.org/journal/cshttp://dx.doi.org/10.4236/cs.2016.74024http://dx.doi.org/10.4236/cs.2016.74024http://creativecommons.org/licenses/by/4.0/},
+  volume    = {07},
+  year      = {2016}
+}
+
+@misc{flir-edge-computing,
+  title   = {{Edge Computing | FLIR Systems}},
+  url     = {https://www.flir.com/discover/iis/machine-vision/edge-computing/},
+  urldate = {2021-04-07}
 }
