@@ -127,9 +127,12 @@ Ik heb mijn model 400 epochs getrained in plaats van 250. Ik was namelijk vroeg 
 	\label{fig:cnn-training}
 \end{figure}
 
+\newpage
+
+% TODO: Talk about F1 Score and such
 In de confusion matrix (tabel~\ref{tab:confusion-matrix}) kunnen we zien dat het model het moeilijkste spraak kan detecteren.
-Ik vermoed dat dat is omdat spraak het meest complexe spectrum zal geven. Achtergrondgeluid zal waarschijnlijk gewoon zacht geluid zijn, handgeklap is een luide impuls en fluiten is een relatief zuivere constante toon.
-Al bij al is het model wel vrij correct.
+Ik vermoed dat dat is omdat spraak het meest complexe spectrum zal geven. Achtergrondgeluid zal waarschijnlijk gewoon zacht geluid zijn, handgeklap is een luide impuls en fluiten is een relatief zuivere constante toon. Omdat het grootste deel correct wordt herkent, denk ik dat mijn model goed werkt. Ook uit de classification report van scikit-learn (tabel~\ref{tab:classification-report}) kunnen we zien dat mijn model zeer goed werkt.
+Per metric zijn de macro average en weighted average hetzelfde omdat de elke klasse even vaak voorkomt. De validatieset is dus helemaal gelijk verdeeld.
 
 \begin{table}[ht]
 	\centering
@@ -158,13 +161,39 @@ Al bij al is het model wel vrij correct.
 	\label{tab:confusion-matrix}
 \end{table}
 
-% TODO: Talk about F1 Score and such
+\begin{table}[ht]
+	\centering
+	\begin{tabular}{ |l|r|r|r|r| }
+		\cline{2-5}
+		\multicolumn{1}{c| }{} & Precision & Recall & \( F_1 \)-score & Support \\
+		\hline
+		Background             & 0.96      & 1.00   & 0.98            & 25      \\
+		Handclap               & 0.88      & 0.92   & 0.90            & 25      \\
+		Speech                 & 0.96      & 0.88   & 0.92            & 25      \\
+		Whistle                & 1.00      & 1.00   & 1.00            & 25      \\
+
+		\hline\hline
+		Accuracy               &           &        & 0.95            & 100     \\
+		Macro average          & 0.95      & 0.95   & 0.95            & 100     \\
+		Weighted average       & 0.95      & 0.95   & 0.95            & 100     \\
+		\hline
+	\end{tabular}
+	\caption{scikit-learn Classification Report van het model}
+	\label{tab:classification-report}
+\end{table}
 
 \section{Edge implementatie}
+We hebben nu een goed getraind model op onze computer staan. Dit model moeten we nu opnieuw implementeren in C code om heel performant te werken op onze microcontroller. Zo kunnen we in real-time geluid opnemen met de ingebouwde microfoon en zo classificeren als achtergrondgeluid, een handenklap, spraak en gefluit. Dit blijkt echter niet zo simpel te zijn.
 
 \subsection{Kwantisatie van ons CNN-model}
+In python gebruikt het model floating point getallen. Floating-point getallen zijn zeer flexibel met een hoge 'dynamic range', wat goed is om te trainen, maar niet het meest performant of nauwkeurig voor grote getallen. Dit komt omdat het getal en de positie van de comma als aparte delen in één getal worden opgeslagen. \cite{enwiki:floating-point} We gaan die dus flexibiliteit opofferen door over te schakelen naar fixed-point getallen. Dit kunnen we ook doen omdat de gewichten nu vast bepaald zijn na het trainen.
+
 \subsubsection{Qm.f formaat}
 \label{section:Qm.f}
+% TODO: Explain Qm.f format
+
+\subsubsection{Exporteren van gewichten}
+Om de gewichten van onze modellen te exporteren, gebruiken we het k2arm.py script. Dit script gaat automatisch alle weights en biases omvormen van floating point nummers tot fixed-point nummers van 8 bits, waarvan één tekenbit. Zo nemen ze zeer weinig plaats in in het geheugen van de microcontroller. Hierbij zal hij voor elke laag de positie van de comma op voorhand bepalen.
 
 \subsection{Experiment met microfoon}
 \subsubsection{Resultaten}
