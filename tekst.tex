@@ -1,8 +1,8 @@
 \section{Inleiding}
 
 Nu machine learning steeds meer toepassingen krijgt, gaat men ook veel meer machine learning modellen gebruiken in de productieomgeving.
-Traditioneel werden die modellen toegepast op centrale servers of gedistribueerde cloud servers. Hierdoor moet er een grote hoeveelheid data verstuurd worden over het internet.
-Dat is echter niet zo schaalbaar als men op grote schaal met heel veel verschillende toestellen data gaat opmeten. % TODO: Waarom niet schaalbaar?
+Traditioneel werden die modellen toegepast op centrale servers of gedistribueerde cloud servers. Hierdoor moest men grote hoeveelheden data versturen over het internet.
+Dat was echter niet zo schaalbaar als men, op grote schaal, met heel veel verschillende toestellen data gaat opmeten. % TODO: Waarom niet schaalbaar?
 
 \begin{figure}[ht]
 	\centering
@@ -26,14 +26,14 @@ Het is echter niet zo simpel om de machine learning code, die geoptimaliseerd is
 Het doel van dit project is met een Convolutional Neural Netwerk (CNN) geluidsevents te classificeren.
 Die geluidsevents kunnen bijvoorbeeld spraak, een handenklap, gefluit of achtergrondgeluid zijn.
 Dat is relatief simpel uit te voeren op een normale computer, maar het is dus niet praktisch om alle geluidsdata van meerdere meetpunten centraal te verwerken in real time.
-Ook is het niet kost-effectief om overal aparte computers te plaatsen. In dit project gaan we dus het getraind CNN op een microcontroller uitvoeren om geluid van de ingebouwde microfoon te classificeren.
+Ook is het niet kosteneffectief om overal aparte computers te plaatsen. In dit project gaan we dus het getraind CNN op een microcontroller uitvoeren om geluid van de ingebouwde microfoon te classificeren.
 
 \section{Log-Mel feature extraction}
 
 Het is mogelijk om een CNN te trainen op de onverwerkte geluidsdata.
 Er zijn echter veel grotere modellen voor nodig, tot 34 lagen diep, en zal daarom ook sneller vatbaar voor overfitting. \cite{IEEE:very-deep-cnn-raw-waveforms}
 Daarom is er toch een feature extraction stap gemaakt om de onverwerkte geluidsdata om te rekenen naar een Log-Mel-spectrogram.
-Dit Log-Mel-spectrogram is eigenlijk een gewoon spectrogram waarvan we de frequentiebanden een beetje vervormd hebben zodat ze beter overeenkomen met de menselijke perceptie van geluid. \cite{enwiki:Mel-freq-cepstrum}
+Dat Log-Mel-spectrogram is eigenlijk een gewoon spectrogram waarvan we de frequentiebanden een beetje vervormd hebben zodat ze beter overeenkomen met de menselijke perceptie van geluid. \cite{enwiki:Mel-freq-cepstrum}
 
 \begin{no-awa} % Zorgt ervoor dat de latex-2-awa parser deze environment negeert
 De  Log-Mel feature extraction gebeurt in deze 5 stappen:
@@ -56,7 +56,7 @@ De  Log-Mel feature extraction gebeurt in deze 5 stappen:
 	\item Discrete Fourier Transform (DFT)
 	      \begin{itemize}
 		      \item Met de DFT transformeren we elke frame van het tijdsdomein naar het frequentiedomein
-		      \item We padden de frames totdat ze een macht van 2 zijn. Zo kunnen we het Fast Fourier Transform (FFT) algoritme gebruiken. Dit is sneller en accurater dan de normale DFT als er omdat er bij de gewone DFT meer afrondingsfouten kunnen gebeuren. \cite{enwiki:FFT}
+		      \item We padden de frames totdat ze een macht van 2 zijn. Zo kunnen we het Fast Fourier Transform (FFT) algoritme gebruiken. Dat is sneller en accurater dan de normale DFT als er omdat er bij de gewone DFT meer afrondingsfouten kunnen gebeuren. \cite{enwiki:FFT}
 		      \item Het resultaat is een vector met de magnitudes van elke frequentie in het signaal. Die vector is zeer hoogdimensionaal en is niet optimaal voor geluidsherkenning.
 	      \end{itemize}
 
@@ -75,7 +75,7 @@ De  Log-Mel feature extraction gebeurt in deze 5 stappen:
 		            \begin{itemize}[label={}]
 			            \item \(m'_b = \frac{\ln\left( m_b \right) - \mu_b}{\sigma_b}\)
 		            \end{itemize}
-		      \item Als allerlaatste pre-processingstap gaan we de data schalen zodat die zich in het interval \(\left[ -1,1 \right]\) bevind. Zo kunnen ze opgeslagen worden in Q0.7 formaat. (Zie hoofdstuk~\ref{section:Qm.f} op pagina~\pageref{section:Qm.f})
+		      \item Als allerlaatste pre-processingstap gaan we de data schalen zodat die zich in het interval \(\left[ -1,1 \right]\) bevind. Zo kunnen ze opgeslagen worden in Q0.7 formaat. \cite{enwiki:q-format}
 	      \end{itemize}
 \end{enumerate}
 \end{no-awa}
@@ -93,9 +93,9 @@ De  Log-Mel feature extraction gebeurt in deze 5 stappen:
 \section{Convolutional Neural Network (CNN)}
 
 Om met de Log-Mel samples geluidsevents te kunnen herkennen, gebruik ik een Convolutional Neural Network (CNN). Ons model bestaat uit meerdere verschillende lagen. De belangrijkste lagen zijn de convolutielagen. De eerste convolutielaag past een 2D-convolutie toe op het Log-Mel-spectrum met een bepaald aantal filters. Die filters gaan we optimaliseren met machine learning.
-Na elke convolutielaag voegen we een ReLU activation laag toe. (niet weergegeven op figuur~\ref{fig:cnn-model}) De ReLU activatiefunctie is snel en gemakkelijk te berekenen, \cite{enwiki:relu} maar kan soms lijden tot een 'vanishing gradient'. \cite{enwiki:vanishing-gradient}
+Na elke convolutielaag voegen we een Rectified Linear Unit (ReLU) activation laag toe. (niet weergegeven op figuur~\ref{fig:cnn-model}) De ReLU activatiefunctie is snel en gemakkelijk te berekenen, \cite{enwiki:relu} maar kan soms lijden tot een 'vanishing gradient'. \cite{enwiki:vanishing-gradient}
 
-Om de dimensionaliteit van onze lagen kleiner te maken, introduceren wij een max pooling laag na elke activatielaag. Die laag neemt het maximum van een aantal waardes en laat de rest vallen. Daarna plaatsen wij een dropout laag. (niet weergegeven op figuur~\ref{fig:cnn-model}) Die gaat willekeurig, met een kans van 50 \%, de resultaten van verschillende convolutiefilters met nul vermenigvuldigen en dus laten vallen. Dit is om overfitting tijdens het trainen tegen te gaan.
+Om de dimensionaliteit van onze lagen kleiner te maken, introduceren wij een max pooling laag na elke activatielaag. Die laag neemt het maximum van een aantal waardes en laat de rest vallen. Daarna plaatsen wij een dropout laag. (niet weergegeven op figuur~\ref{fig:cnn-model}) Die gaat willekeurig, met een kans van 50 \%, de resultaten van verschillende convolutiefilters met nul vermenigvuldigen en dus laten vallen. Dat is om overfitting tijdens het trainen tegen te gaan.
 
 \begin{figure}[ht]
 	\centering
@@ -105,7 +105,7 @@ Om de dimensionaliteit van onze lagen kleiner te maken, introduceren wij een max
 	\label{fig:cnn-model}
 \end{figure}
 
-Die vier lagen (convolutie, activatie, max pooling en dropout) herhalen we drie keer. Daarna schakelen we over naar een traditioneel neuraal netwerk, ookwel 'fully connected netwerk' genoemd. Die bestaat uit fully connected layers of perceptronlagen, activatielagen en dropout lagen. Als allerlaatste outputlaag gebruiken wij een softmax activation layer om een genormaliseerde kansverdeling over de verschillende geluidsklassen. \cite{enwiki:softmax}
+Die vier lagen (convolutie, activatie, max pooling en dropout) herhalen we drie keer. Daarna schakelen we over naar een traditioneel neuraal netwerk, ook wel 'fully connected netwerk' genoemd. Die bestaat uit fully connected layers of perceptronlagen, activatielagen en dropout lagen. Als allerlaatste outputlaag gebruiken wij een softmax activation layer om een genormaliseerde kansverdeling over de verschillende geluidsklassen. \cite{enwiki:softmax}
 
 % TODO: Maybe add a table with the specific structure of the model and the amount of parameters
 
@@ -118,7 +118,9 @@ Voor Python gebruik ik Visual Studio Code, een all round text editor, om de code
 Een requirements.txt file \cite{pip-user-guide} had bijvoorbeeld al een goede hulp geweest voor het installeren van de juiste packages.
 
 \subsubsection{Resultaten}
-Ik heb mijn model 400 epochs getrained in plaats van 250. Ik was namelijk vroeg klaar met al de rest en heb zo dus wat extra getained om te kunnen vergelijken. Omdat de model loss lager is bij 400 epochs dan bij 250 epochs, kunnen we afleiden dat het model waarschijnlijk beter is na 400 epochs. (zie figuur~\ref{fig:cnn-training})
+\label{section:train-results}
+
+Ik heb mijn model 400 epochs getraind in plaats van 250. Ik was namelijk vroeg klaar met al de rest en heb zo dus wat extra getained om te kunnen vergelijken. Omdat de model loss lager is bij 400 epochs dan bij 250 epochs, kunnen we afleiden dat het model waarschijnlijk beter is na 400 epochs. (zie figuur~\ref{fig:cnn-training})
 
 \begin{figure}[ht]
 	\centering
@@ -183,20 +185,26 @@ Per metric zijn de macro average en weighted average hetzelfde omdat de elke kla
 \end{table}
 
 \section{Edge implementatie}
-We hebben nu een goed getraind model op onze computer staan. Dit model moeten we nu opnieuw implementeren in C code om heel performant te werken op onze microcontroller. Zo kunnen we in real-time geluid opnemen met de ingebouwde microfoon en zo classificeren als achtergrondgeluid, een handenklap, spraak en gefluit. Dit blijkt echter niet zo simpel te zijn.
+We hebben nu een goed getraind model op onze computer staan. Dat model moeten we nu opnieuw implementeren in C code om heel performant te werken op onze microcontroller. Zo kunnen we in real-time geluid opnemen met de ingebouwde microfoon en zo classificeren als achtergrondgeluid, een handenklap, spraak en gefluit. Dat blijkt echter niet zo simpel te zijn.
 
 \subsection{Kwantisatie van ons CNN-model}
-In python gebruikt het model floating point getallen. Floating-point getallen zijn zeer flexibel met een hoge 'dynamic range', wat goed is om te trainen, maar niet het meest performant of nauwkeurig voor grote getallen. Dit komt omdat het getal en de positie van de comma als aparte delen in één getal worden opgeslagen. \cite{enwiki:floating-point} We gaan die dus flexibiliteit opofferen door over te schakelen naar fixed-point getallen. Dit kunnen we ook doen omdat de gewichten nu vast bepaald zijn na het trainen.
+In python gebruikt het model floating point getallen. Floating-point getallen zijn zeer flexibel met een hoge 'dynamic range', wat goed is om te trainen, maar niet het meest performant of nauwkeurig voor grote getallen.
+De resolutie van floating point getallen gaat namelijk meeschalen met de grootte van het getal. \cite{enwiki:floating-point}
 
-\subsubsection{Qm.f formaat}
-\label{section:Qm.f}
-% TODO: Explain Qm.f format
+Om sneller te kunnen rekenen, en om een constante resolutie te bewaren gaan we overschakelen op fixed point getallen. \cite{enwiki:q-format} Hierbij verliezen we wel de flexibiliteit van de floating point getallen, maar de gewichten zijn nu vast bepaald na het trainen. Dat is dus geen probleem.
 
 \subsubsection{Exporteren van gewichten}
-Om de gewichten van onze modellen te exporteren, gebruiken we het k2arm.py script. Dit script gaat automatisch alle weights en biases omvormen van floating point nummers tot fixed-point nummers van 8 bits, waarvan één tekenbit. Zo nemen ze zeer weinig plaats in in het geheugen van de microcontroller. Hierbij zal hij voor elke laag de positie van de comma op voorhand bepalen.
+Om de gewichten van onze modellen te exporteren, gebruiken we het k2arm.py script. Dat script gaat automatisch alle gewichten en biases omvormen van floating point nummers tot fixed-point nummers van 8 bits, waarvan één tekenbit. Zo nemen ze zeer weinig plaats in, in het geheugen van de microcontroller. Hierbij zal hij voor elke laag de positie van de comma op voorhand bepalen.
+
+Het resultaat is een C header file (.h file) met weight arrays, bias arrays en 'bit shift amounts' voor elke laag. Die waardes moeten wij invullen in de voorbeeld header file met alle gewichten. Dat zou veel copy-paste en typewerk zijn. Dus ik heb gewoon de geëxporteerde header file geïmporteerd in de voorbeeld header en dan de arrays naar pointers omgevormd en zo alleen de namen ingevuld. Als ik mijn model opnieuw trainde, kon ik heel snel de oude gewichten vervangen door de nieuwe gewichten in de C code zonder individuele lijnen code aan te passen.
 
 \subsection{Experiment met microfoon}
-\subsubsection{Resultaten}
+Om onze modellen te testen of ze werken op de microcontroller, hebben we eerst getest met gekende audiodata die we uploaden naar de microcontroller. Als de microcontroller de juiste predictie maakt, kunnen we overschakelen naar audio van de microfoon. Om dat te doen moesten we de code van ons model kopiëren naar het nieuwe voorbeeldproject. Daarna moesten we nog een aantal lijnen aanpassen om het model uit te voeren.
+
+Het resultaat is, dat de microcontroller zijn predictie in real-time weergeeft via de seriële poort.
+Er zacht echter wel een vertraging op als we in de handen klapte of in de microfoon floot. Ook spraak kon de microcontroller het moeilijkste herkennen, net zoals we gezien hebben bij het trainen en valideren van het model. (Zie hoofdstuk~\ref{section:train-results} op pagina~\pageref{section:train-results})
 
 
 \section{Conclusie}
+Het concept van dit project is zeer interessant. Het was eens verfrissend om eens machine learning te doen op een kleine gelimiteerde ARM-microcontroller in de plaats van een grote server met genoeg ram voor 4 normale desktops. Ik had echter wel het gevoel dat we niet al te veel zelf hebben nagedacht over het project. Het grootste deel van de tijd werd besteed aan het troubleshooten van onze development software.
+De rest van de tijd waren we ook eerder code aan het copy-pasten in plaats zelf te schrijven. Toch ben ik tevreden van mijn project, want uiteindlijk viel alles op zijn plaats en het werkte tamelijk goed.
